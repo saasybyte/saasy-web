@@ -1,0 +1,88 @@
+# CONVENTIONS:
+# - Use filename-friendly names in `summary` fields (lowercase, hyphens, no spaces)
+# - Bruno generates .bru filenames from summaries
+# - Example: `summary: list-provider-models` → `list-provider-models.bru`
+
+openapi: 3.0.3
+info:
+  title: saasy-edge API
+  version: 1.0.0
+
+servers:
+  - url: /api/v1
+
+paths:
+  /provider-models:
+    get:
+      operationId: listProviderModels
+      summary: list-provider-models
+      tags:
+        - provider-models
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderModelsResponse'
+
+components:
+  schemas:
+    LLMProviderModel:
+      type: object
+      required: [id, provider, modelId, displayName]
+      properties:
+        id:
+          type: string
+          format: uuid
+        provider:
+          type: string
+        modelId:
+          type: string
+        displayName:
+          type: string
+
+    TTSProviderModel:
+      type: object
+      required: [id, provider, modelId, displayName]
+      properties:
+        id:
+          type: string
+          format: uuid
+        provider:
+          type: string
+        modelId:
+          type: string
+        displayName:
+          type: string
+
+    STTProviderModel:
+      type: object
+      required: [id, provider, modelId, displayName]
+      properties:
+        id:
+          type: string
+          format: uuid
+        provider:
+          type: string
+        modelId:
+          type: string
+        displayName:
+          type: string
+
+    ProviderModelsResponse:
+      type: object
+      required: [llm, tts, stt]
+      properties:
+        llm:
+          type: array
+          items:
+            $ref: '#/components/schemas/LLMProviderModel'
+        tts:
+          type: array
+          items:
+            $ref: '#/components/schemas/TTSProviderModel'
+        stt:
+          type: array
+          items:
+            $ref: '#/components/schemas/STTProviderModel'
